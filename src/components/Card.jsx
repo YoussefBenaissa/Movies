@@ -1,7 +1,11 @@
 import React from "react";
+import { Fragment, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+
 const Card = (props) => {
   const film = props.film;
-  return (
+  
+ return (
     <>
       <div className="card mb-3 mt-4 ml-2" style={{ width: "560px" }}>
         <div className="row no-gutters">
@@ -20,10 +24,12 @@ const Card = (props) => {
               <p className="card-text mt-3">
                 {film.release_date} | {film.vote_average}/10 ({film.vote_count}){" "}
               </p>
-              <a href="#" className="stretched-link text-danger ">
+              <a href="#" className="text-danger " >
                 Ajoutez a vos favoris
               </a>
-              <button className="mt-3 btn btn-warning">Details</button>
+              <Link className=" btn btn-warning mt-3" to="/details">
+                Details
+              </Link>
             </div>
           </div>
         </div>

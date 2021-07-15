@@ -4,10 +4,14 @@ import React from "react";
 import axios from "axios";
 import Card from "./Card";
 
+
+
 const Movies = () => {
   const [data, setData] = useState([]);
   const [playOnce, setPlayOnce] = useState(true);
- 
+  const [searchTerm, setSearchTerm] = useState("");
+  
+
   useEffect(() => {
     if (playOnce) {
       axios
@@ -19,15 +23,41 @@ const Movies = () => {
           setPlayOnce(false);
         });
     }
-   
   }, [data, playOnce]);
-  console.log(data)
+
+  const handleSearch = (e) => {
+    let value = e.target.value;
+    value.length > 1 && setSearchTerm(value);
+  };
+
   return (
     <>
-    <div className="row">{data.map((film)=>(<Card film={film} key={film.id}/>))}</div>
-    
+      <form className="form-inline my-2 my-lg-0">
+        <input
+          className="form-control ml-auto mt-2"
+          type="search"
+          placeholder="Recherche"
+          aria-label="Search"
+          onChange={handleSearch}
+        />
+        <button className="btn btn-primary mt-2 ml-2 " type="submit">
+          Recherche
+        </button>
+      </form>
 
+      <div className="row">
+        {data
+          .filter((film) => {
+            return film.title.toLowerCase().includes(searchTerm.toLowerCase());
+          })
+          .map((film) => (
+            <>
+              <Card film={film} key={film.id} />
+          
+            </>
+          ))}
       
+      </div>
     </>
   );
 };
